@@ -440,6 +440,7 @@ See the [LICENSE](LICENSE) file for complete terms and conditions.
 **Special Thanks:**
 - **ElevenLabs**: Advanced conversational AI technology and neural voice synthesis
 - **Matrix Universe**: Inspiration for the cyberpunk aesthetic and philosophical themes
+- **Alexandre Sajus**: Inspiration and guidance
 - **Open Source Community**: Python ecosystem, PyAudio, and supporting libraries
 
 **Connect:**
