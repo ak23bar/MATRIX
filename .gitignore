@@ -159,6 +159,14 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+# Project-specific ignores
+logs/*
+!logs/.gitkeep
+sim/*.log
+*.pid
+*.sock
+.env.*
+
 # Pyre type checker
 .pyre/
 

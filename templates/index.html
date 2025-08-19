@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATRIX AI - Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.4/socket.io.js"></script>
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-rain"></canvas>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>MATRIX AI</h1>
+            <p>Voice Assistant | Web Interface</p>
+            <div class="agent-info">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="agentStatus">Agent: Ready to assist you, Neo</span>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        <span class="typing-text" id="welcomeText"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <input type="text" class="input-field" id="messageInput" placeholder="Enter your message...">
+                <button class="btn" id="sendBtn">SEND</button>
+                <button class="btn voice-btn" id="voiceBtn">VOICE</button>
+            </div>
+        </div>
+
+        <!-- Floating Avatar -->
+        <div class="avatar-container">
+            <div class="avatar" id="avatar">
+                <div class="avatar-core"></div>
+                <div class="avatar-ring"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/matrix-rain.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

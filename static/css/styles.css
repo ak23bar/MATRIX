@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: #000;
+    color: #00FF41;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Matrix Rain Background */
+#matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1px);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px solid #00FF41;
+    background: rgba(0, 20, 0, 0.9);
+    box-shadow: 0 2px 20px rgba(0, 255, 65, 0.3);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px #00FF41;
+    margin-bottom: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.header p {
+    font-size: 1rem;
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+.agent-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    background: #00FF41;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.listening {
+    animation: fastPulse 0.5s infinite;
+}
+
+.status-indicator.speaking {
+    animation: speaking 1s infinite;
+}
+
+/* Chat Area */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Professional Avatar */
+.avatar-container {
+    position: fixed;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+    z-index: 15;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #00FF41 20%, #003d10 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+    transition: all 0.3s ease;
+}
+
+.avatar-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(0, 255, 65, 0.3);
+    border-radius: 50%;
+    animation: rotate 10s linear infinite;
+}
+
+.avatar.listening .avatar-core {
+    animation: avatarPulse 1s infinite;
+    box-shadow: 0 0 50px rgba(0, 255, 65, 1);
+}
+
+.avatar.listening .avatar-ring {
+    border-color: #00FF41;
+    animation: rotate 2s linear infinite, ringPulse 1s infinite;
+}
+
+.avatar.speaking .avatar-core {
+    animation: avatarSpeaking 0.8s infinite alternate;
+}
+
+.avatar.speaking .avatar-ring {
+    border-color: #00FF41;
+    animation: rotate 1s linear infinite, speakingRing 0.8s infinite;
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin-bottom: 25px;
+    animation: messageSlide 0.5s ease-out;
+}
+
+.message.user {
+    text-align: right;
+}
+
+.message.assistant {
+    text-align: left;
+}
+
+.message-content {
+    display: inline-block;
+    max-width: 80%;
+    padding: 15px 25px;
+    border-radius: 20px;
+    position: relative;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.message.user .message-content {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(0, 255, 65, 0.1) 100%);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    margin-right: 20px;
+}
+
+.message.assistant .message-content {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 100, 25, 0.2) 100%);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    margin-left: 20px;
+}
+
+.typing-text {
+    overflow: hidden;
+    border-right: 2px solid #00FF41;
+    animation: blink 1s infinite;
+}
+
+/* Input Area */
+.input-area {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 20, 0, 0.8);
+    border-top: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 15px 15px 0 0;
+}
+
+.input-field {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(0, 255, 65, 0.3);
+    border-radius: 25px;
+    padding: 15px 25px;
+    color: #00FF41;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #00FF41;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.input-field::placeholder {
+    color: rgba(0, 255, 65, 0.5);
+}
+
+.btn {
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #00FF41 0%, #00cc33 100%);
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 100px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #00cc33 0%, #00aa2b 100%);
+    box-shadow: 0 5px 20px rgba(0, 255, 65, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn.voice-btn {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(0, 255, 65, 0.1) 100%);
+    color: #00FF41;
+    border: 2px solid rgba(0, 255, 65, 0.3);
+}
+
+.btn.voice-btn.active {
+    background: linear-gradient(135deg, #00FF41 0%, #00cc33 100%);
+    color: #000;
+    animation: voicePulse 1s infinite;
+    border: 2px solid #00FF41;
+}
+
+/* Animations */
+@keyframes glow {
+    from { text-shadow: 0 0 20px #00FF41; }
+    to { text-shadow: 0 0 30px #00FF41, 0 0 40px #00FF41; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes fastPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.2); }
+}
+
+@keyframes speaking {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    25% { opacity: 0.7; transform: scale(1.1); }
+    50% { opacity: 1; transform: scale(1.2); }
+    75% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes avatarPulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes ringPulse {
+    0% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.3; transform: scale(1); }
+}
+
+@keyframes avatarSpeaking {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes speakingRing {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% { border-color: #00FF41; }
+    51%, 100% { border-color: transparent; }
+}
+
+@keyframes voicePulse {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.8); }
+    100% { box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
+}
+
+/* Scrollbar */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 65, 0.3);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 65, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .avatar-container {
+        right: 20px;
+    }
+    
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .avatar-core {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .input-area {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
